@@ -1,0 +1,760 @@
+import telebot
+import logging
+logger = telebot.logger
+telebot.logger.setLevel(logging.DEBUG) 
+# import constans
+# from telebot import types
+bot = telebot.TeleBot('774606011:AAHQzvuc97_YZYevL7LCJMh1tQkHdx3pjbA')
+users = [410819637,329546876,591563627,513810155,645413390, 544744166,  514280124,  558012259,   933053790, 301595058, 431874826,  725985865,   596672708,   443286422,    803899880 ,   727629595,   573147939,        906970322,      542536111,    805166711,         927139023                       , 490528542     ,    934559656     , 410498438  ,  141083256,        374386376,   1153311022,    793089330,   531553285,  856420893,  525598059, 1121853974,    680170280,    914587344,   802459626,  517822953,   748026571     ]
+#         Стеблина              ЕГ                         Nikolay      Мельник       Veronika   ДеЛаВега    одесд2    АтельеЛилу  Самотохина   Воротынцева  Bogdanovich   Trone Grande    Cube44     КостенкоОльга    Steblinaxiaomi      Hanna       Ошманина Ирина    Елена Городничая шик николаев      Hommie           Старинец          Max IT       Настя рыжий кот    Турик      Семенова И.      Дуденко Н.  Шевченко И.  Ирина Sh   Каспрук Н.  Беличенко А.  Шевцова К.   Бухаловская   Турик2       Батист       Декорейшн Киев
+@bot.message_handler(commands=['start'])
+
+def handle_start(message, text=True):
+    if message.from_user.id in users:
+        user_markup = telebot.types.ReplyKeyboardMarkup()
+        user_markup.row('📚 Suerte Elegancia collection', '📚 Suerte mebel')
+        #user_markup.row('📚 Запросить прайс:', '📖 Запрос на наличие Suerte', '❓ Задать вопрос')
+        #user_markup.row('📞 Позвонить в компанию', '👍 Facebook', '📸 Instagram')
+        if text:
+            bot.send_message(message.from_user.id, 'Приветствую ✌ {} выберите пункт меню: ⬇'.format(message.from_user.first_name),
+                         reply_markup=user_markup)
+        else:
+            bot.send_message(message.from_user.id, 'Выберите пункт меню ⬇',
+                         reply_markup=user_markup)
+    else:
+        bot.send_message(message.from_user.id, 'Для получения доступа к информации, отправьте этот id на телеграм @SuerteSupport, {}, id - {}'
+                         .format(message.from_user.first_name, message.from_user.id))
+
+
+
+
+
+
+@bot.message_handler(content_types=['text'])
+def handle_text(message):
+    if message.from_user.id in users:
+       if message.text == "📚 Suerte Elegancia collection":
+         manager_markup = telebot.types.ReplyKeyboardMarkup()
+         manager_markup.row('🔎 Запросить прайc', ' 📥 Запросить наличие тканей Suerte', ' ❓ Задать вопрос')
+         manager_markup.row('📞 Позвонить в компанию', '👍 Facebook', '📸 Instagram')
+         manager_markup.row('⬅ Назад')
+         bot.send_message(message.from_user.id, "Выберите пункт меню: ⬇", reply_markup=manager_markup)
+
+  elif message.text == '🔎 Запросить прайc':
+        keyboard = types.InlineKeyboardMarkup()
+        url_button = types.InlineKeyboardButton(text="Нажмите чтобы перейти на прайс-лист",
+                                                url="https://docs.google.com/spreadsheets/d/1gXRc6xPUmX4dNPvNfvC7leIifBUlNvEJ7-L-QzEdnh0/edit#gid=1265136000")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Нажмите на кнопку, чтобы перейти на Google Docs.", reply_markup=keyboard)
+         
+         
+         
+         
+         
+         
+         
+         
+        
+     
+       elif message.text == "📚 Suerte mebel":
+         manager_markup = telebot.types.ReplyKeyboardMarkup()
+         manager_markup.row('📚 Запросить прайс:', '📖 Запрос на наличие Suerte', '❓ Задать вопрос')
+         manager_markup.row('📞 Позвонить в компанию', '👍 Facebook', '📸 Instagram')
+         manager_markup.row('⬅ Назад')
+         bot.send_message(message.from_user.id, "Выберите пункт меню: ⬇", reply_markup=manager_markup)
+    
+       elif message.text == "❓ Задать вопрос":
+         bot.send_message(message.from_user.id,
+                         "Задайте свой вопрос здесь @HelenDaylight")
+
+       elif message.text == "📚 Запросить прайс:":
+         bot.send_message(message.from_user.id,
+                         "Отправьте свой e-mail сюда @HelenDaylight")
+
+       elif message.text == "📖 Запрос на наличие Suerte":
+           bot.send_message(message.from_user.id, "https://drive.google.com/file/d/1K2S7eQ2eS-5UYyAltnxGx1YaTc_D2LdJ/")
+         #bot.send_message(message.from_user.id,
+                        # "https://drive.google.com/open?id=1h0LfktBlMSgWZQPa30EREdWJqTA43oAt")
+
+       elif message.text == "📚 Цены на ткани:":
+         catalog_markup = telebot.types.ReplyKeyboardMarkup(True, False)
+         catalog_markup.row('Suerte', 'Elegancia')
+         catalog_markup.row('Margo', '⬅ Назад')
+         bot.send_message(message.from_user.id, "Выберите каталог ⬇", reply_markup=catalog_markup)
+
+       elif message.text == "Suerte":
+         bot.send_message(message.from_user.id, "https://drive.google.com/open?id=1JXSkU19DT_eFPFlfKr0B_paIHdDdl2MX")
+       elif message.text == "Elegancia":
+         bot.send_message(message.from_user.id, "https://drive.google.com/open?id=1cK-A-K619t_dsX8uVcEzmoyWqPByG102")
+      # elif message.text == "Iliv":
+      #   bot.send_message(message.from_user.id, "https://drive.google.com/open?id=1DeU1C4DM7fkdiv9Yl5B7qxSbZ33zlIGu")
+       elif message.text == "Margo":
+         bot.send_message(message.from_user.id, "https://drive.google.com/open?id=1D68f0227yf_Jz7aSBp9MDR2vB_8Mn61-")
+     #  elif message.text == "FR-One":
+     #    bot.send_message(message.from_user.id, "https://drive.google.com/open?id=1qARBc1Vv6e9eMRKeKa4wZajrDrqsOabn")
+
+
+       elif message.text == "📞 Позвонить в компанию":
+         manager_markup = telebot.types.ReplyKeyboardMarkup()
+         manager_markup.row('Рук.направл Елена Ст.', 'Директор', 'Офис менеджер')
+         manager_markup.row('Екатерина Бычковская', 'Лиля Пинчук', 'Юлия Липовая','Екатерина Некипелая')
+         manager_markup.row('⬅ Назад')
+         bot.send_message(message.from_user.id, "Выберите менеджера ⬇", reply_markup=manager_markup)
+
+       elif message.text == "Лиля Пинчук":
+         bot.send_message(message.from_user.id, 'Лиля Пинчук\n' +
+                'Менеджер отдела продаж\n' +
+                '\n' +
+                '📱 +38 (067) 405 66 84\n' +
+                '\n' +
+                '☎ +38 (044) 545 60 80\n' +
+                '\n' +
+                '📧 manager1@daylight.com.ua ')
+       elif message.text == "Юлия Липовая":
+         bot.send_message(message.from_user.id, 'Юлия Липовая\n' +
+                'менеджер отдела продаж\n' +
+                '\n' +
+                '📱 +38 (067) 240 12 34\n' +
+                '\n' +
+                '☎ +38 (044) 545 60 80\n' +
+                '\n' +
+                '📧 manager2@daylight.com.ua')
+       elif message.text == "Екатерина Бычковская":
+         bot.send_message(message.from_user.id, 'Екатерина Бычковская \n' +
+                'менеджер отдела продаж\n' +
+                '\n' +
+                '📱 +38 (067) 327 80 81\n' +
+                '\n' +
+                '☎ +38 (044) 545 60 80\n' +
+                '\n' +
+                '📧 manager3@daylight.com.ua')
+       elif message.text == "Екатерина Некипелая":
+         bot.send_message(message.from_user.id, 'Екатерина Некипелая \n' +
+                'менеджер отдела продаж\n' +
+                '\n' +
+                '📱 +38 (067) 564 10 15\n' +
+                '\n' +
+                '☎ +38 (044) 545 60 80\n' +
+                '\n' +
+                '📧 manager4@daylight.com.ua')
+       elif message.text == "Офис менеджер":
+         bot.send_message(message.from_user.id, 'Офис менеджер\n' +
+                '\n' +
+                '☎ +38 (044) 545 60 80\n' +
+                '\n' +
+                '📧 office-assistant@daylight.com.ua')
+       elif message.text == "Рук.направл Елена Ст.":
+         bot.send_message(message.from_user.id, 'Стеблина Елена\n' +
+                '\n' +
+                '📱 +38 (067) 247 42 22\n' +
+                '\n' +
+                '📱 +38 (067) 524-59-09\n' +
+                '\n' +
+                '📧 fibre@daylight.com.ua\n' +
+                '\n' +
+                '@HelenDaylight')
+       elif message.text == "Директор":
+         bot.send_message(message.from_user.id, 'Елена Геннадьевна\n' +
+                '\n' +
+                '📱 +38 (067) 401 32 03\n' +
+                '\n' +
+                '☎ +38 (044) 545 60 80\n' +
+                '\n' +
+                '📧 director@daylight.com.ua')
+       elif message.text == "⬅ Назад":
+        handle_start(message, text=False)
+
+       elif message.text == "👍 Facebook":
+        bot.send_message(message.from_user.id, "https://www.facebook.com/suerte.elegancia/?fref=mentions")
+
+       elif message.text == "📸 Instagram":
+        bot.send_message(message.from_user.id, "https://www.instagram.com/suerte.elegancia/")
+
+       elif message.text == "⬅ Назад":
+        handle_start(message, text=False)
+    else:
+        bot.send_message(message.from_user.id, 'Для получения доступа к информации, отправьте этот id на телеграм @HelenDaylight, {}, id - {}'
+                         .format(message.from_user.first_name, message.from_user.id))
+
+bot.polling(none_stop=True)
+
+#####################
+keyboard1 = telebot.types.ReplyKeyboardMarkup()
+keyboard1.row('🔎 Запросить прайc', '📥 Запросить наличие тканей Suerte','📢   Задать вопрос по Suerte')
+keyboard1.row('📞 Позвонить в компанию', '👍 Facebook','📷 Instagram')
+#Телефоны
+keyboard2 = telebot.types.ReplyKeyboardMarkup()
+keyboard2.row('Клиент-менеджеры','Региональные менеджеры по городам','Бренд-менеджеры',)
+keyboard2.row('Офис-менеджер', 'Горячая линия Директора')
+keyboard2.row('🔙 Назад')
+#Переход на алфавит
+keyboard3 = telebot.types.ReplyKeyboardMarkup()
+keyboard3.row('📓 Наличие тканей Suerte без разбивки', '🔠 Наличие с разбивкой по рулонам')
+keyboard3.row('🔙 Назад')
+#Алфавит Каталогов№1
+keyboard4 = telebot.types.ReplyKeyboardMarkup()
+keyboard4.row('A', 'B', 'C', 'D','E-F','G-H',)
+keyboard4.row('I-G', 'L', 'M', 'N-O', 'P','R','S-T', 'V-W')
+keyboard4.row('🔙 Назад',)
+#Клиент-менеджеры
+keyboard5 = telebot.types.ReplyKeyboardMarkup()
+keyboard5.row('Липовая Юлия', 'Бычковская Екатерина',)
+keyboard5.row('Некипелая Катя','Пинчук Лилия')
+keyboard5.row('🔙 Назад', '🔙 Назад на один шаг')
+#Региональные менеджеры по городам
+keyboard6 = telebot.types.ReplyKeyboardMarkup()
+keyboard6.row('Киев', 'Харьков',)
+keyboard6.row('Львов','Днепр', 'Одесса')
+keyboard6.row('🔙 Назад', '🔙 Назад на один шаг')
+#Бренд-менеджеры
+keyboard7 = telebot.types.ReplyKeyboardMarkup()
+keyboard7.row('Suerte Elegancia', 'FR One Margo Iliv', 'Suerte mebel, Link Studio, Adora')
+keyboard7.row('🔙 Назад', '🔙 Назад на один шаг')
+
+
+
+@bot.message_handler(commands=['start'])
+def start_message(message):
+    bot.send_message(message.chat.id, '👋 Здраствуйте, вы запустили нашего бота, для дальнейшей навигации в нём, используйте клавиатуру представленую внизу экрана ↘️', reply_markup=keyboard1)
+@bot.message_handler(content_types=['text'])
+def send_text(message):
+    if message.text.lower() == '📚️ 2запросить прайс':
+        bot.send_message(message.chat.id, 'Напишите на телеграмм @Suertesupport')
+    elif message.text.lower() == '📋 запросить наличие тканей suerte':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        bot.send_message(message.chat.id, 'Выберете каталог, указав его первую букву ⬇️', reply_markup=keyboard4)
+
+    elif message.text == '🔎 Запросить прайc':
+        keyboard = types.InlineKeyboardMarkup()
+        url_button = types.InlineKeyboardButton(text="Нажмите чтобы перейти на прайс-лист",
+                                                url="https://docs.google.com/spreadsheets/d/1gXRc6xPUmX4dNPvNfvC7leIifBUlNvEJ7-L-QzEdnh0/edit#gid=1265136000")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Нажмите на кнопку, чтобы перейти на Google Docs.", reply_markup=keyboard)
+
+    elif message.text == '📥 Запросить наличие тканей Suerte':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        bot.send_message(message.chat.id, 'Выберете каталог, указав его первую букву', reply_markup=keyboard4)
+
+    elif message.text == '📢   Задать вопрос по Suerte':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        bot.send_message(message.chat.id, 'Напишите свой вопрос сюда @Suertesupport', reply_markup=keyboard)
+
+    elif message.text == '📞 Позвонить в компанию':
+        bot.send_message(message.chat.id, 'Выберите нужный вам варинт ⬇️', reply_markup=keyboard2)
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text.lower() == '👍 facebook':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Перейти", url="https://www.facebook.com/suerte.elegancia/?fref=mentions")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Нажмите на кнопку, чтобы перейти в Facebook.", reply_markup=keyboard)
+    elif message.text.lower() == '📷 instagram':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Перейти", url="https://www.instagram.com/suerte.elegancia/")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "\n Нажмите на кнопку, чтобы перейти в Instagram.", reply_markup=keyboard)
+    elif message.text == '🔙 Назад':
+           bot.send_message(message.chat.id, 'Вы вернулись к главному меню', reply_markup=keyboard1)
+
+    elif message.text == '🔙 Назад на один шаг':
+           bot.send_message(message.chat.id, 'Вы вернулись к предыдущему меню', reply_markup=keyboard2)
+
+    elif message.text == 'Клиент-менеджеры':
+           bot.send_message(message.chat.id, 'Выберите менеджера ⬇️', reply_markup=keyboard5)
+
+    elif message.text == 'Региональные менеджеры по городам':
+        bot.send_message(message.chat.id, 'Выберите город, какой вам нужен', reply_markup=keyboard6)
+
+    elif message.text == 'Киев':
+        bot.send_message(message.chat.id, 'Турик Светлана\n '+
+        '\n'
+                        '📱   +38 (067) 445 32 05 \n'+
+                         '\n'
+                         '☎️  +38 (044) 545-60-70 \n'+
+                         '\n'
+                         '📲️  +38 (044) 545-60-80 \n'+
+                         '\n'
+                         '📧 bm2@daylight.com.ua \n' +
+                         '\n'
+                         ,)
+        bot.send_message(message.chat.id, 'Шевцова Екатерина\n ' +
+                         '\n'
+                         '📱   +38 (067) 767-87-86 \n' +
+                         '\n'
+                         '☎️  +38 (044) 545-60-70 \n' +
+                         '\n'
+                         '📲️  +38 (093) 767-87-86 \n' +
+                         '\n'
+                         '📧 suerte2@daylight.com.ua \n' +
+                         '\n'
+                         , )
+    elif message.text == 'Харьков':
+        bot.send_message(message.chat.id, 'Беличенко Анна \n '+
+        '\n'
+                        '📱   +38 (066) 831 89 69  \n'+
+                         '\n'
+                         '☎️  +38 (067) 502 89 92 \n'+
+                         '\n'
+                         '📲️  +38 (057) 728 23 14 \n'+
+                         '\n'
+                         '📧anna@daylight.com.ua \n'+
+                         '\n'
+                         ,)
+    elif message.text == 'Львов':
+        bot.send_message(message.chat.id, 'Бакун Ю. \n ' +
+                         '\n'
+                         '📱   +38 (066) 831 89 69  \n' +
+                         '\n'
+                         '☎️  +38 (067) 502 89 92 \n' +
+                         '\n'
+                         '📲️  +38 (057) 728 23 14 \n' +
+                         '\n'
+                         '📧 sales.lviv@daylight.com.ua 4 \n' +
+                         '\n', )
+    elif message.text == 'Днепр':
+        bot.send_message(message.chat.id, 'Дуденко Наталья \n ' +
+                         '\n'
+                         '📱   +38 (067) 450 00 79  \n' +
+                         '\n'
+                         '☎️  +38 (099)401 36 16  \n' +
+                         '\n'
+                         '📧 dneprdl@daylight.com.ua \n' +
+                         '\n'
+                         )
+    elif message.text == 'Одесса':
+        bot.send_message(message.chat.id, 'Семенова Инна \n ' +
+                         '\n'
+                         '📱   +38 (067) 504 91 09  \n' +
+                         '\n' )
+
+
+    elif message.text == 'Горячая линия Директора':
+        bot.send_message(message.chat.id, 'Гаркуша Елена Геннадиевна \n '+
+        '\n'
+                        '📱   +38 (067) 401 32 03 \n'+
+                         '\n'
+                         '☎️  +38 (044) 545 60 80 \n'+
+                         '\n'
+                         '📧 director@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Офис-менеджер':
+        bot.send_message(message.chat.id, 'Офис менеджер \n ' +
+                         '\n'
+                         '📱  +38 (044) 545 60 80 \n' +
+                         '\n'
+                         '📧 office-assistant@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Бычковская Екатерина':
+        bot.send_message(message.chat.id, 'Бычковская Екатерина  \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38 (067) 327 80 81 \n' +
+                         '\n'
+                         '☎️ +38 (044) 545 60 80 \n' +
+                         '\n'
+                         '📧 manager3@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Липовая Юлия':
+        bot.send_message(message.chat.id, 'Липовая Юлия  \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱  +38 (067) 405 66 84 \n' +
+                         '\n'
+                         '☎️+38 (044) 545 60 80 \n' +
+                         '\n'
+                         '📧  manager2@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Некипелая Катя':
+        bot.send_message(message.chat.id, 'Некипелая Екатерина \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38 (067) 564 10 15 \n' +
+                         '\n'
+                         '☎️+38 (044) 545 60 80 \n' +
+                         '\n'
+                         '📧  manager4@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Старинец Наталья':
+        bot.send_message(message.chat.id, 'Старинец Наталья  \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38(067) 405-66-74 \n' +
+                         '\n'
+                         '☎️@TelegramStarinets \n' +
+                         '\n'
+                         '📧  manager4@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+    elif message.text == 'Пинчук Лилия':
+        bot.send_message(message.chat.id, 'Пинчук Лилия \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38 (067) 405-66-84 \n' +
+                         '\n'
+                         '☎️   +38 (044)545-60-70/доп.111 \n' +
+                         '\n'
+                         '📧    manager1@daylight.com.ua \n' +
+                         '\n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Бренд-менеджеры':
+        bot.send_message(message.chat.id, 'Выберите наиминование бренда ⬇️', reply_markup=keyboard7)
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Suerte Elegancia':
+        bot.send_message(message.chat.id, 'Старинец Наталья  \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38(067) 405-66-74 \n' +
+                         '\n'
+                         '☎️@TelegramStarinets \n' +
+                         '\n'
+                         '📧  manager4@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Suerte mebel':
+        bot.send_message(message.chat.id, 'Cтеблина Елена  \n ' +
+                         '\n'
+                         '📱   +38(044) 545-60-70 \n' +
+                         '\n'
+                         '☎️  +38 (067) 524-59-09 \n' +
+                         '\n'
+                         '📧  fibre@daylight.com.ua\n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Suerte mebel, Link Studio, Adora':
+        bot.send_message(message.chat.id, 'Cтеблина Елена  \n ' +
+                         '\n'
+                         '📱 +38 (067) 247 42 22 \n' +
+                         '\n'
+                         '📱 +38 (067) 524-59-09\n' +
+                         '\n'
+                         '📧  fibre@daylight.com.ua\n'
+                         '@HelenDaylight\n')
+
+        keyboard = types.InlineKeyboardMarkup()
+
+
+
+    elif message.text == 'Link Studio':
+        bot.send_message(message.chat.id, 'Cтеблина Елена  \n ' +
+                         '\n'
+                         '📱   +38(044) 545-60-70 \n' +
+                         '\n'
+                         '☎️  +38 (067) 524-59-09 \n' +
+                         '\n'
+                         '📧  fibre@daylight.com.ua\n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Adora':
+        bot.send_message(message.chat.id, 'Cтеблина Елена  \n ' +
+                         '\n'
+                         '📱   +38(044) 545-60-70 \n' +
+                         '\n'
+                         '☎️  +38 (067) 524-59-09 \n' +
+                         '\n'
+                         '📧  fibre@daylight.com.ua\n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    elif message.text == 'Suerte Elegancia':
+        bot.send_message(message.chat.id, 'Старинец Наталья  \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38(067) 405-66-74 \n' +
+                         '\n'
+                         '☎️@TelegramStarinets \n' +
+                         '\n'
+                         '📧  manager4@daylight.com.ua \n')
+        keyboard = types.InlineKeyboardMarkup()
+    elif message.text == 'FR One Margo Iliv':
+        bot.send_message(message.chat.id, 'Самотохина Л \n ' +
+                         '\n'
+                         'Менеджер отдела продаж \n '
+                         +
+                         '\n'
+                         '📱   +38 (067)245-10-57 \n' +
+                         '\n'
+                         '☎️  +38 (067)245-10-57 \n' +
+        '\n')
+        keyboard = types.InlineKeyboardMarkup()
+
+    #Коды букв алфавитов
+    elif message.text == 'A':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Ancona discount",
+                                                url="https://drive.google.com/open?id=1atBkKXvtfQ2MinOTYjk8e9TnH5k_vqVp")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Aria",
+                                                url="https://drive.google.com/open?id=1QQA05iPsiIcyKR4JhAifi8dBqDyEHymM")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Atlanta",
+                                                url="https://drive.google.com/open?id=1jpJflxr2q41F2ypWoofvwaa_znneW98s")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Aurora discount",
+                                                url="https://drive.google.com/open?id=1QOOH2BtdY5JIplEzVAUCWmzElc6ZA7t6")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  A ", reply_markup=keyboard)
+
+    elif message.text == 'B':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Bavaria",
+                                                url="https://drive.google.com/open?id=1YuGjRkjqEmrUcOhoZZBrb6SUqYgtjgBJ")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Beatrice",
+                                                url="https://drive.google.com/open?id=12Et-KunPoG5oc12ozVRMI1oWUQEtjyq_")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Bergamo",
+                                                url="https://drive.google.com/open?id=1qxb3wPmGzY7sfOyprZjQwfhJpYBgFZy9")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Bianca",
+                                                url="https://drive.google.com/open?id=1Qakr5RRUPMlvr_SRXr7knb4IJ3NmzmLb")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Boston",
+                                                url="https://drive.google.com/open?id=1LqB-SZ30HLo-WgUx5yzs66Rg2m2_e3bH")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Braveheart",
+                                                url="https://drive.google.com/open?id=1K4AEclmzJF6u-6-fK3I_qJGutNpbx1hX")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  B ", reply_markup=keyboard)
+    elif message.text == 'C':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Calista",
+                                                url="https://drive.google.com/open?id=1o2lpU4Ibz6Y9J8Lh78Y4Dz0sGAnP5udW")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Chelsea",
+                                                url="https://drive.google.com/open?id=1cfEx30MVeOpPfyoIc8qCs80SFgF0usz_")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Chalet",
+                                                url="https://drive.google.com/file/d/1O88M6DgG0yp3B7K_0e5ggmcL09aAU0Dj/view?usp=sharing")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Chicago",
+                                                url="https://drive.google.com/open?id=1wZ3T95WSOicfo_ZEBAG_JZDFtSy-00FF")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Convoy",
+                                                url="https://drive.google.com/open?id=1AuokqT046PSaH8gc5p3kfjoxzdCLEi7G")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  С", reply_markup=keyboard)
+    elif message.text == 'D':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Dallas",
+                                                url="https://drive.google.com/open?id=1Ya96HAdCuzAxSnQ0tl_zsJYi5RExazex")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Diamante",
+                                                url="https://drive.google.com/open?id=1kWRc2O33gQbunHXbxZyWZXGVf1UUMqaM")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  D", reply_markup=keyboard)
+    elif message.text == 'E-F   ':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Elegante",
+                                                url="https://drive.google.com/open?id=1TZLoXkyKhD2VLbsm2hHMRYE3hOk49SNk")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Feliche",
+                                                url="https://drive.google.com/open?id=1qRDw2DwHctVvLabGNsvoqjjpUrt_AJ84")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Florence",
+                                                url="https://drive.google.com/open?id=1JJi87DS1zwYE-FPyg6Usms0L_oELmRFP")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Fuji",
+                                                url="https://drive.google.com/open?id=1JAO-WsJ1Ry-7sF3b0ji04Gbwr8A0vpM5")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  С", reply_markup=keyboard)
+    elif message.text == 'E-F':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Elegante",
+                                                url="https://drive.google.com/open?id=1TZLoXkyKhD2VLbsm2hHMRYE3hOk49SNk")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Feliche",
+                                                url="https://drive.google.com/open?id=1qRDw2DwHctVvLabGNsvoqjjpUrt_AJ84")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Florence",
+                                                url="https://drive.google.com/open?id=1dhWXBTtqia9QsqXUSI3_-zzsBw7MZfpc")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Fuji dim-out",
+                                                url="https://drive.google.com/open?id=1JAO-WsJ1Ry-7sF3b0ji04Gbwr8A0vpM5")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  E-F", reply_markup=keyboard)
+    elif message.text == 'G-H':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Gentleman",
+                                                url="https://drive.google.com/open?id=1yCVam7nUTTlft0r-69IqQsBfhVYNG4VN")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Georgia",
+                                                url="https://drive.google.com/open?id=1aaFTNEmBoAJsB7yIpxv283Uh9OljzPtZ")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Grace",
+                                                url="https://drive.google.com/open?id=1gemqzPNNr6h_OWzOndhwbxV9koI5ShJv")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Historia",
+                                                url="https://drive.google.com/open?id=1VnW_IBoUGRAXhAuuwym5ItQEQutZTu-J")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Houston",
+                                                url="https://drive.google.com/open?id=1Iktr7TFjwUFSNTYvdLpLuqXqYzKN7fwv")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  G-H", reply_markup=keyboard)
+    elif message.text == 'I-G':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Isabella",
+                                                url="https://drive.google.com/open?id=1y5LyQNiiD-BqAYXs0INTOaF5X67h82lU")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Janett",
+                                                url="https://drive.google.com/open?id=1mwDGKneUYI4C5k3EqHZPbStYLHZxCEHK")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Journal",
+                                                url="https://drive.google.com/open?id=1t67x5M9EjY0Z-S-3oEV30GxpR5kzwDS2")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  I-G", reply_markup=keyboard)
+    elif message.text == 'L':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Lion",
+                                                url="https://drive.google.com/open?id=101gAN25jTQgG7cg0VJzQuVpVWiA_f12I")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Lluvia",
+                                                url="https://drive.google.com/open?id=16GK9J3CwLUyXjl2dPcwhP0oSJ2_8eEz0")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Loreto",
+                                                url="https://drive.google.com/open?id=1F68xTYKnL-rEgovRxuhM-QHV52s0792O")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Lure trevira",
+                                                url="https://drive.google.com/open?id=147fhYHLZZleTn-llPl3pshOw9JYsadp1")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  L", reply_markup=keyboard)
+    elif message.text == 'M':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Millenium*",
+                                                url="https://drive.google.com/open?id=1mYJmfOo8J57jTEiHgpFbIsj-f6qeBs8x")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Mist",
+                                                url="https://drive.google.com/open?id=1KYuUKn70GMUwJWehEhJdjSEXB2oR6Esj")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Montana",
+                                                url="https://drive.google.com/open?id=1CpiUIk3U49oQ4hMVyCqxWTgglfsXliUr")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Monte Carlo",
+                                                url="https://drive.google.com/open?id=1ssnAv0Q0KxmiUEQufIMLbJnOWGkuEQuR")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Monterey",
+                                                url="https://drive.google.com/open?id=1NqAGe5nuAvkrx5UXMqhuJfEeEdcJTuHu")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  L", reply_markup=keyboard)
+    elif message.text == 'N-O':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Natural",
+                                                url="https://drive.google.com/open?id=189OzVG82ay8kci1Ujv1q6w1OpAgNF81D")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="New York",
+                                                url="https://drive.google.com/open?id=1ad9-3OOSP2f4isw7mkGwXDWk2RWGHTbR")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Novara",
+                                                url="https://drive.google.com/open?id=1HwIF3r4nnrmdjZ1KpqsA2jmfuTNmGUZv")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Olivia",
+                                                url="https://drive.google.com/open?id=13RtCafYZAQO-FvK0XSIycGDK9op4hnhd")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  N-O", reply_markup=keyboard)
+    elif message.text == 'P':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Paola",
+                                                url="https://drive.google.com/open?id=1tA0MCAmG7uGFxZWgOvG7_KgbJpBrHvnc")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Philadelphia*",
+                                                url="https://drive.google.com/open?id=1Cz5BRjGPt2jZ8PnD0_80Ss089zP30j0a")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Polo",
+                                                url="https://drive.google.com/open?id=1DBWP-4EY-eBLNNpRHpKMFwB3nCfI9_OS")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Pure Linen",
+                                                url="https://drive.google.com/open?id=1UCoxbv_I3yqNydkO2F9EheyHKJIfoKpi")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  P", reply_markup=keyboard)
+    elif message.text == 'R':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Reach",
+                                                url="https://drive.google.com/open?id=1rR2Fbp2wtf4-WYce_um9E6BO4ZRoJtS-")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Renato*",
+                                                url="https://drive.google.com/open?id=1qz4OuHX9SNlJcBZYF9hLLj2dyCYto8bg")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Reni",
+                                                url="https://drive.google.com/open?id=1YQu4QhwTrFGjImEJRHiG5qi8puOjVGid")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Residence",
+                                                url="https://drive.google.com/open?id=1auFOPE9Hy_UB73RKS89iYQjXELXsm7Iu")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Riviera",
+                                                url="https://drive.google.com/open?id=1-8gUlQR6CwPVoc7X83cnlRZH4HY-G65B")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Rodos",
+                                                url="https://drive.google.com/open?id=1khnR-gfAAtjyUTbFWmlTnE1w5_Ou2ZI9")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  R", reply_markup=keyboard)
+    elif message.text == 'S-T':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Shetland",
+                                                url="https://drive.google.com/open?id=1yxirp5WdwFG6ctmhNMmLkGctAf93AUGP")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Smart",
+                                                url="https://drive.google.com/open?id=1-6GazB7WNTsIQVGrNyZyAiSfbcziqsBu")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Sorrento",
+                                                url="https://drive.google.com/open?id=17ZdT2Zu7CgGbVyb6_F9Rtf7-vf-ifazK")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Swan",
+                                                url="https://drive.google.com/open?id=197cjrZEJ7yeBC59qsbjj2MGwx9xqaHr_")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Tiffany",
+                                                url="https://drive.google.com/open?id=13nEdG8WpCUpYsXJ7iMavorkfrvUtZ6YD")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Tokyo",
+                                                url="https://drive.google.com/open?id=1ET3gO0ARYJtDnzaJjdrGsh3hRFnJOA97")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Tweed",
+                                                url="https://drive.google.com/open?id=1Ih-DxOsIuKArQ26hrGFnUutoyJr4FwzU")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  S-T", reply_markup=keyboard)
+    elif message.text == 'V-W':
+        keyboard = types.InlineKeyboardMarkup(row_width=3)
+        url_button = types.InlineKeyboardButton(text="Velutto",
+                                                url="https://drive.google.com/open?id=1M_ocsjXs1Qdhzw-UJ0J-JCCY84lpFaa1")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Vera",
+                                                url="https://drive.google.com/open?id=1GSWQ_nffHQHgnFgfLcOHX85LYK69mp-d")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Verona",
+                                                url="https://drive.google.com/open?id=1RIork8N2cEOHEdRvIkd_0cx0UvxE8vO8")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Violett",
+                                                url="https://drive.google.com/open?id=173lui1UXCDdX3B72vjtz64bDtgjCy3C3")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Vito",
+                                                url="https://drive.google.com/open?id=1sTwCAYU2YHwotnEMcmMiJeJQ2PQLzNT3")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Vitoria",
+                                                url="https://drive.google.com/open?id=1ANKo5tbckMMxz3uVJwBfiUaSbD59olBt")
+        keyboard.add(url_button)
+        url_button = types.InlineKeyboardButton(text="Wool",
+                                                url="https://drive.google.com/open?id=1Jxmp048sVVfOCZU718ip-_gQ6SY7Tfh9")
+        keyboard.add(url_button)
+        bot.send_message(message.chat.id, "Отображены все каталоги, которые начинаются на:  V-W", reply_markup=keyboard)
+
+@bot.message_handler(commands=['start'])
+def send_text(message):
+    if message.text:
+        bot.send_message(message.chat.id, 'Отправьте свой e-mail сюда @TelegramStarinets')

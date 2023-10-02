@@ -1,0 +1,8 @@
+version: '2'
+services:
+  bot-dayl:
+    build: .
+    container_name: bot-dayl
+    volumes:
+    - ./:/app
+    restart: always

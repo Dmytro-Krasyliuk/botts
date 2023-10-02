@@ -1,0 +1,17 @@
+deploy:
+  tags:
+  - host5ve-docker
+  script:
+  - docker-compose -p telegrambot up -d
+  - docker-compose -p telegrambot restart
+  only:
+  - master
+
+logs:
+  tags:
+  - host5ve-docker
+  script:
+  - docker-compose -p telegrambot logs
+  only:
+  - master
+  when: manual
